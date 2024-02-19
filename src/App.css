@@ -20,7 +20,7 @@
   
   .app h1,
   h2 {
-    color: white;
+    color: rgb(255, 255, 255);
   }
   
   .app .input {
@@ -33,7 +33,7 @@
     margin-top: 0.8em;
     width: 20em;
     height: 2em;
-    background-color: white;
+    background-color: rgb(255, 255, 255);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -65,7 +65,7 @@
     margin-top: 0.8em;
     width: 20em;
     height: 2em;
-    background-color: white;
+    background-color: rgb(255, 255, 255);
     display: flex;
     justify-content: space-between;
     align-items: center;
