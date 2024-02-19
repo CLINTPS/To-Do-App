@@ -1,9 +1,16 @@
-import { useState } from 'react'
+import { useState,useEffect,useRef } from 'react'
 import './App.css'
 
 function App() {
   const [toDos,setToDos]=useState([])
   const [toDo,setToDo]=useState('')
+  const [editingTodo,setEdithingTodo]=useState(null)
+  const [editingTodoText,setEdithingTodoText]=useState('')
+  const refObj=useRef()
+
+  useEffect(()=>{
+    refObj.current.focus()
+  },[])
 
   const handleTOdochange =(event)=>setToDo(event.target.value)
   
@@ -17,8 +24,11 @@ function App() {
   }
 
   const handleCheckboxChange = (id, checked) => {
-    setToDos(toDos.map(todo => 
-      todo.id === id ? { ...todo, status: checked } : todo
+    setToDos(toDos.map((obj) => {
+      if(obj.id===id){
+        obj.status=checked
+      }
+     }
     ));
   };
 
@@ -27,6 +37,34 @@ function App() {
       return obj2.id !== obj.id
     }))
   }
+
+  const toTextEdit=(obj)=>{
+    setEdithingTodo(obj.id);
+    setEdithingTodoText(obj.text)
+  }
+
+  const todoEditSave=()=>{
+    if(editingTodoText.trim() !== ''){
+      setToDos(
+        toDos.map((obj)=>{
+          if(obj.id===editingTodo){
+            obj.text=editingTodoText
+          }
+          return obj
+        })
+      )
+      setEdithingTodo(null)
+      setEdithingTodoText('')
+    }else{
+      alert('Please enter text')
+    }
+  }
+
+  const todoEditCancel=()=>{
+    setEdithingTodo(null)
+    setEdithingTodoText('')
+  }
+
 
   return (
     <div className="app">
@@ -38,10 +76,10 @@ function App() {
         <h2>Whoop, it's My planes</h2>
       </div>
       <div className="input">
-        <input value={toDo} onChange={handleTOdochange} type="text" placeholder=" Add item..." />
+        <input ref={refObj} value={toDo} onChange={handleTOdochange} type="text" placeholder=" Add item..." />
         <i onClick={handleAddtodo} className="fas fa-plus"></i>
       </div>
-
+  
       <div className="todos">
         {toDos.map((obj)=>{
           return(
@@ -54,10 +92,24 @@ function App() {
                 name=""
                 id=""
               />
+              {editingTodo === obj.id ?(
+                <div>
+                  <input onChange={(event)=>setEdithingTodoText(event.target.value)} type="text" value={editingTodoText}/>
+                </div>
+              ):(
               <p>{obj.text}</p>
+              )}
             </div>
 
           <div className="right">
+            {editingTodo === obj.id?(
+              <>
+              <i onClick={todoEditSave} className="fas fa-save"></i>
+              <i onClick={todoEditCancel} className="fas fa-ban"></i>
+              </>
+            ):(
+              <i onClick={()=>toTextEdit(obj)} className="fas fa-edit"></i>
+            )}
             <i onClick={()=>toDoDelete(obj)} className="fas fa-times"></i>
           </div>
 
