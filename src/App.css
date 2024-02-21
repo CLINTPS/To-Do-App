@@ -4,7 +4,7 @@
   }
   
   body {
-    background-color: #44035a;
+    background-color: #4c2132;
   }
   
   .app {
@@ -35,6 +35,7 @@
     width: 20em;
     height: 2em;
     background-color: rgb(255, 255, 255);
+    border: 3px solid black;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -68,6 +69,7 @@
     height: 2em;
     background-color: rgb(255, 255, 255);
     display: flex;
+    border: 1px solid black;
     justify-content: space-between;
     align-items: center;
     border-radius: 6px;
